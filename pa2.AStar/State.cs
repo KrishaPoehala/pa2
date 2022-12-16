@@ -21,13 +21,13 @@ public class State
     public int Depth => _depth;
 	public List<Action> Actions => _actions;
 	public List<Queen > Queens => _queens;
-	public bool IsSolution(int queensCount)
+	public bool IsSolution(int queensCount, int fieldSize)
 	{
 		for (int q = 0; q < queensCount; q++)
 		{
 			int x = _queens[q].X;
 			int y = _queens[q].Y;
-			if (Map[y * 8 + x] >= 2)
+			if (Map[y * fieldSize + x] >= 2)
 			{
 				return false;
 			}
@@ -46,7 +46,7 @@ public class State
 			{
 				if (y != i)
 				{
-					_actions.Add(new(Map[i * 8 + x], q, x, i));
+					_actions.Add(new(Map[i * fieldSize + x], q, x, i));
 				}
 			}
 		}
@@ -58,9 +58,8 @@ public class State
 	{
 		var action = _actions[0];
 		_actions.RemoveAt(0);
-		var newState = new State();
-		newState._depth = _depth + 1;
-		foreach (var item in _queens)
+        var newState = new State { _depth = _depth + 1 };
+        foreach (var item in _queens)
 		{
 			newState._queens.Add(new(item.X, item.Y));
 		}
@@ -79,7 +78,7 @@ public class State
 		{
 			ChessMap.Set.Add(hash);
 			ChessMap.UpgradeMap(newState.Map, action.Ox, action.Oy, 1, fieldSize);
-			if (newState.IsSolution(fieldSize))
+			if (newState.IsSolution(queensCount, fieldSize))
 			{
 				return newState;
 			}

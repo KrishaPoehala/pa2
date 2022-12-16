@@ -2,8 +2,8 @@
 
 public static class ChessMap
 {
-	public static HashSet<string> Set = new();
-	public static List<State> States = new();
+	public static HashSet<string> Set { get; } = new();
+	public static List<State> States { get; } = new();
 	public static void UpgradeMap(List<int> map, Queen queen, int value, int fieldSize)
 	{
 		UpgradeMap(map, queen.X, queen.Y, value, fieldSize);
@@ -12,7 +12,7 @@ public static class ChessMap
 	public static void UpgradeMap(List<int> map, int x, int y, int value, int fieldSize)
     {
 
-        map[y * 8 + x] += value;
+        map[y * fieldSize + x] += value;
         UpdateStraigthLines(map, x, y, value, fieldSize);
         UpdateDiagonals(map, x, y, value, fieldSize);
     }
@@ -24,7 +24,7 @@ public static class ChessMap
         {
             if (x != i && z + i >= 0 && z + i < fieldSize)
             {
-                map[(z + i) * 8 + i] += value;
+                map[(z + i) * fieldSize + i] += value;
             }
         }
 
@@ -33,7 +33,7 @@ public static class ChessMap
         {
             if (x != i && z - i >= 0 && z - i < fieldSize)
             {
-                map[(z - i) * 8 + i] += value;
+                map[(z - i) * fieldSize + i] += value;
             }
         }
     }
@@ -44,7 +44,7 @@ public static class ChessMap
         {
             if (x != i)
             {
-                map[y * 8 + i] += value;
+                map[y * fieldSize + i] += value;
             }
         }
 
@@ -52,7 +52,7 @@ public static class ChessMap
         {
             if (y != i)
             {
-                map[i * 8 + x] += value;
+                map[i * fieldSize + x] += value;
             }
         }
     }

@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\pa2.Common\pa2.Common.csproj" />
+  </ItemGroup>
+
 </Project>

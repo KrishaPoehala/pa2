@@ -10,16 +10,16 @@ public class AStartTests
     [Fact]
     public void GivesASolution_WhenTheInputIsCorrect()
     {
-        var astar = new Search(6, 6);
+        var astar = new AStarSearch(6, 6);
         var testqueens = GetInitial();
         var solution = astar.FindThePath(testqueens);
         Assert.Equal(GetExpected(), solution.Queens, new QueenEqualityComparer());
-    }   
+    }       
 
     [Fact]
     public void Throws_WhenTheInputIsIncorrect()
     {
-        var astar = new Search(-1, 6);
+        var astar = new AStarSearch(-1, 6);
         Assert.Throws<InvalidDataException>(() => astar.GenerateInitialQueens());
     }
 

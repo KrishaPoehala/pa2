@@ -1,9 +1,9 @@
-﻿namespace pa2.AStar;
+﻿using pa2.Common;
 
-public class Queen
+namespace pa2.AStar;
+
+public class Queen: QueenBase
 {
-    public int X;
-    public int Y;
     public Queen(int x, int y)
     {
         X = x;

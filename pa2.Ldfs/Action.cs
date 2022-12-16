@@ -1,7 +1,9 @@
 ﻿
+using pa2.Common;
+
 namespace pa2.Ldfs;
 
-public class Queen
+public class Queen : QueenBase
 {
     public Queen(int x, int y, int wrong)
     {
@@ -10,8 +12,6 @@ public class Queen
         Wrong = wrong;
     }
 
-    public int X { get; set; }
-    public int Y { get; set; }
     public int Wrong { get; set; }
 
     public void Deconstruct(out int x, out int y, out int wrong)

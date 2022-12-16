@@ -1,4 +1,4 @@
-﻿namespace pa2.Ldfs;
+﻿namespace pa2.Common;
 
 public class Constants
 {

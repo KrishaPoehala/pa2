@@ -1,10 +1,12 @@
-﻿namespace pa2.AStar;
+﻿using pa2.Common;
 
-public class Search
+namespace pa2.AStar;
+
+public class AStarSearch
 {
-	private int _queensCount;
-	private int _fieldSize;
-	public Search(int queensCount, int fieldSize)
+	private readonly int _queensCount;
+	private readonly int _fieldSize;
+	public AStarSearch(int queensCount, int fieldSize)
     {
         _queensCount = queensCount;
         _fieldSize = fieldSize;
@@ -43,8 +45,8 @@ public class Search
     private void UpgradeInitial(List<Queen> queens)
     {
 		var newState = new State(queens);
-		var map = newState.Map = new List<int>(8 * 8);
-		for (int j = 0; j < 64; j++)
+		var map = newState.Map = new List<int>(_fieldSize * _fieldSize);
+		for (int j = 0; j < _fieldSize * _fieldSize; j++)
 		{
 			map.Add(0);
 		}
