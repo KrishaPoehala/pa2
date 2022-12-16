@@ -79,7 +79,6 @@ public class LdfsSearch
 	{
 		if (depth >= _maxDepth || _isSolved)
 		{
-			//ThreadPool.QueueUserWorkItem(_ => Console.Write(depth)); 
 			return;
 		}
 

@@ -23,7 +23,7 @@ namespace pa2.Tests
         [Fact]
         public void Throws_WhenTheInputIsIncorrect()
         {
-            Assert.Throws(typeof(InvalidDataException), () => Search.GenerateInitialQueens(-1,2));
+            Assert.Throws<InvalidDataException>(() => Search.GenerateInitialQueens(-1,2));
         }
     }
 }

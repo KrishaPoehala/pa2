@@ -4,18 +4,19 @@ namespace pa2.AStar;
 
 public class State
 {
-	public int Depth = 0;
-	public List<int> Map = new();
-	public List<Action> Actions = new();
-	public List<Queen> Queens = new();
-	public Action? FirstPreviousAction = null;
-
+	private int _depth = 0;
+	public List<int> Map { get; internal set; } = new();
+	private List<Action> _actions = new();
+	private List<Queen> _queens = new();
+	public int Depth => _depth;
+	public List<Action> Actions => _actions;
+	public List<Queen > Queens => _queens;
 	public bool IsSolution(int queensCount)
 	{
 		for (int q = 0; q < queensCount; q++)
 		{
-			int x = Queens[q].X;
-			int y = Queens[q].Y;
+			int x = _queens[q].X;
+			int y = _queens[q].Y;
 			if (Map[y * 8 + x] >= 2)
 			{
 				return false;
@@ -29,37 +30,36 @@ public class State
 	{
 		for (int q = 0; q < queensCount; q++)
 		{
-			int x = Queens[q].X;
-			int y = Queens[q].Y;
+			int x = _queens[q].X;
+			int y = _queens[q].Y;
 			for (int i = 0; i < fieldSize; i++)
 			{
 				if (y != i)
 				{
-					Actions.Add(new(Map[i * 8 + x], q, x, i));
+					_actions.Add(new(Map[i * 8 + x], q, x, i));
 				}
 			}
 		}
 
-		Actions.Sort((x, y) => x.HitsCount - y.HitsCount);
+		_actions.Sort((x, y) => x.HitsCount - y.HitsCount);
 	}
 
 	public State? CreateDirevative(int index, int queensCount, int fieldSize)
 	{
-		var action = Actions[0];
-		Actions.RemoveAt(0);
+		var action = _actions[0];
+		_actions.RemoveAt(0);
 		var newState = new State();
-		newState.Depth = Depth + 1;
-		newState.FirstPreviousAction = action;
-		foreach (var item in Queens)
+		newState._depth = _depth + 1;
+		foreach (var item in _queens)
 		{
-			newState.Queens.Add(new(item.X, item.Y));
+			newState._queens.Add(new(item.X, item.Y));
 		}
 
 		newState.Map = new(Map);
-		ChessMap.UpgradeMap(newState.Map, newState.Queens[action.QueenNumber], -1, fieldSize);
-		newState.Queens[action.QueenNumber].X = action.Ox;
-		newState.Queens[action.QueenNumber].Y = action.Oy;
-		var sorted = new List<Queen>(newState.Queens);
+		ChessMap.UpgradeMap(newState.Map, newState._queens[action.QueenNumber], -1, fieldSize);
+		newState._queens[action.QueenNumber].X = action.Ox;
+		newState._queens[action.QueenNumber].Y = action.Oy;
+		var sorted = new List<Queen>(newState._queens);
 
 		sorted.Sort((q, b) => (q.X + q.Y * fieldSize)
 		- (b.X + b.Y * fieldSize));
@@ -78,7 +78,7 @@ public class State
 			ChessMap.States.Add(newState);
 		}
 
-		if (Actions.Count == 0)
+		if (_actions.Count == 0)
 		{
 			ChessMap.States.RemoveAt(index);
 		}
