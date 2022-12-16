@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using pa2.Ldfs;
+using Xunit;
 
 namespace pa2.Tests;
 
@@ -8,7 +9,6 @@ public class LdfsTests
     [Fact]
     public void GivesTheRightPath_WhenTheInputIsCorrect()
     {
-        
         var ldfs = new LdfsSearch(6, 6);
         ldfs.GenerateInitialQueens();
         ldfs.Search();
@@ -19,4 +19,8 @@ public class LdfsTests
             Assert.Equal(1, ldfs.PlayField[y][x]);
         }
     }
+
+    
+
+    
 }

@@ -1,5 +1,4 @@
-﻿using pa2.Ldfs;
-
+﻿namespace pa2.Ldfs;
 public class LdfsSearch
 {
 	private int _totalWrong = 0;
@@ -147,15 +146,15 @@ public class LdfsSearch
 				continue;
 			}
 
-			var (x2, y2, _) = _queens[i];
-			if (AreEqualDirections(x0, y0, x2, y2))
+			var (currentX, currentY, _) = _queens[i];
+			if (AreEqualDirections(x0, y0, currentX, currentY))
 			{
 				_queens[i].Wrong++;
 				++wrong;
 				_totalWrong++;
 			}
 
-			if (AreEqualDirections(x1, y1, x2, y2))
+			if (AreEqualDirections(x1, y1, currentX, currentY))
 			{
 				_queens[i].Wrong--;
 				_totalWrong--;

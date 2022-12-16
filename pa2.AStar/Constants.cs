@@ -7,8 +7,3 @@ public class Constants
     public const int FIELD_SIZE_MIN = 3;
     public const int FIELD_SIZE_MAX = 8;
 }
-
-
-
-
-

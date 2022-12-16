@@ -8,7 +8,17 @@ public class State
 	public List<int> Map { get; internal set; } = new();
 	private List<Action> _actions = new();
 	private List<Queen> _queens = new();
-	public int Depth => _depth;
+
+    public State()
+    {
+    }
+
+    public State(List<Queen> queens)
+    {
+        _queens = queens;
+    }
+
+    public int Depth => _depth;
 	public List<Action> Actions => _actions;
 	public List<Queen > Queens => _queens;
 	public bool IsSolution(int queensCount)

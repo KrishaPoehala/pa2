@@ -2,8 +2,9 @@
 
 public static class Search
 {
-	public static State FindThePath(int queensCount, int fieldSize)
+	public static State FindThePath(List<Queen> queens,int queensCount, int fieldSize)
 	{
+		UpgradeInitial(queens, fieldSize);
 		while (true)
 		{
 			int? minIdx = null;
@@ -31,38 +32,45 @@ public static class Search
 		}
 	}
 
-	public static List<Queen> GenerateInitialQueens(int queensCount, int fieldSize)
-	{
-		if (!ConsoleHelper.IsInRange((uint)queensCount, (uint)fieldSize))
-		{
-			throw new InvalidDataException();
-		}
-
-		var newState = new State();
-		var queens = newState.Queens;
+    private static void UpgradeInitial(List<Queen> queens, int fieldSize)
+    {
+		var newState = new State(queens);
 		var map = newState.Map = new List<int>(8 * 8);
 		for (int j = 0; j < 64; j++)
 		{
 			map.Add(0);
 		}
 
-		var i = queensCount;
-		while (i > 0)
+		for(int i = 0; i < queens.Count; ++ i)
 		{
-			var x = queensCount - i;
-			var y = Random.Shared.Next(0, fieldSize - 1);
-
+			var x = queens[i].X;
+			var y = queens[i].Y;
 			ChessMap.UpgradeMap(map, x, y, 1, fieldSize);
-			queens.Add(new(x, y));
-			i--;
 		}
 
-		newState.GenerateActions(queensCount, fieldSize);
+		newState.GenerateActions(queens.Count, fieldSize);
 		ChessMap.States.Add(newState);
-		return queens;
-
 	}
 
+    public static List<Queen> GenerateInitialQueens(int queensCount, int fieldSize)
+	{
+		if (!ConsoleHelper.IsInRange((uint)queensCount, (uint)fieldSize))
+		{
+			throw new InvalidDataException();
+		}
 
+		var queens = new List<Queen>(queensCount);
+
+
+        var i = queensCount;
+        while (i > 0)
+        {
+            var x = queensCount - i;
+            var y = Random.Shared.Next(0, fieldSize - 1);
+            queens.Add(new(x, y));
+            i--;
+        }
+
+		return queens;
+	}
 }
-
