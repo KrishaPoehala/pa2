@@ -24,8 +24,9 @@ public class LdfsSearch
 		}
 	}
 
-	public List<Queen> Search()
+	public List<Queen> Search(List<Queen> initial)
 	{
+		UpgradeInitial(initial);
 		for (var q = 0; q < _queensCount; q++)
 		{
 			var x = _queens[q].X;
@@ -47,13 +48,27 @@ public class LdfsSearch
 		throw new Exception("The solution was not found");
 	}
 
-	public void GenerateInitialQueens()
-	{
-		var add = _queensCount;
-		while (add > 0)
-		{
-			var x = _queensCount - add;
+
+	public List<Queen> GenerateInitialQueens()
+    {
+		var queens = new List<Queen>();
+        for (int i = 1; i <= _queensCount; i++)
+        {
+			var x = _queensCount - i;
 			var y = Random.Shared.Next(0, _fieldSize - 1);
+			queens.Add(new Queen(x, y, 0));
+        }
+
+		return queens;
+    }
+
+	private void UpgradeInitial(List<Queen> initialQueens)
+	{
+		var add = _queensCount - 1;
+		while (add >= 0)
+		{
+			var x = initialQueens[add].X;
+			var y = initialQueens[add].Y;
 			_playfield[y][x] = 1;
 			var wrong = 0;
 			for (var i = 0; i < _queens.Count; i++)
@@ -92,7 +107,7 @@ public class LdfsSearch
 		_playfield[y][x] = 1;
 		_playfield[oldy][oldx] = 0;
 		_totalWrong -= oldw;
-		UpdateWrong(queen, x, y, oldx, oldy, out var wrong);
+		UpdateQueensIfEqualDirections(queen, x, y, oldx, oldy, out var wrong);
 		_queens[queen].Wrong = wrong + 1;
 		_totalWrong += wrong + 1;
 		if (_totalWrong == _queensCount)
@@ -133,10 +148,10 @@ public class LdfsSearch
 		_totalWrong += oldw;
 
 
-		UpdateWrong(queen, oldx, oldy, x, y, out _);
+		UpdateQueensIfEqualDirections(queen, oldx, oldy, x, y, out _);
 	}
 
-	private void UpdateWrong(int queen, int x0, int y0, int x1, int y1, out int wrong)
+	private void UpdateQueensIfEqualDirections(int queen, int x0, int y0, int x1, int y1, out int wrong)
 	{
 		wrong = 0;
 		for (var i = 0; i < _queensCount; i++)

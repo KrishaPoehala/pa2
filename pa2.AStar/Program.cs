@@ -1,14 +1,14 @@
 ﻿using pa2.AStar;
 
-var (queensCount, fieldSize) = ConsoleHelper.GetDataFromConsole();
-var generatedQueens = Search.GenerateInitialQueens(queensCount, fieldSize);
+var helper = new ConsoleHelper();
+var (queensCount, fieldSize) = helper.GetDataFromConsole();
+var astar = new Search(queensCount, fieldSize);
+var generatedQueens = astar.GenerateInitialQueens();
 
 var startTime = DateTime.Now;
-ConsoleHelper.Draw(generatedQueens, fieldSize);
-var solution = Search.FindThePath(generatedQueens, queensCount, fieldSize);
-foreach (var item in solution.Queens)
-{
-    Console.WriteLine(item);
-}
+helper.Draw(generatedQueens, fieldSize);
+Console.WriteLine("=============================");
+var solution = astar.FindThePath(generatedQueens);
+helper.Draw(solution.Queens, fieldSize);
+Console.Write("The path was found in: ");
 Console.WriteLine((DateTime.Now - startTime).TotalMilliseconds);
-ConsoleHelper.Draw(solution.Queens, fieldSize);

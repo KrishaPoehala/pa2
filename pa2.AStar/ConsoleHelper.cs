@@ -2,7 +2,7 @@
 
 public class ConsoleHelper
 {
-    public static void Draw(List<Queen> queens, int fieldSize)
+    public void Draw(List<Queen> queens, int fieldSize)
     {
         for (int i = 0; i < fieldSize; i++)
         {
@@ -23,7 +23,7 @@ public class ConsoleHelper
             Console.WriteLine('\n');
         }
     }
-    public static (int, int) GetDataFromConsole()
+    public (int, int) GetDataFromConsole()
     {
         Console.WriteLine("Welcome to the lab 2");
         while (true)

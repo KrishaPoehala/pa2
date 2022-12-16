@@ -1,11 +1,15 @@
 ﻿
 using pa2.Ldfs;
 
-var (queensCount, fieldSize) = ConsoleHelper.GetDataFromConsole();
+var consoleHelper = new ConsoleHelper();
+var (queensCount, fieldSize) = consoleHelper.GetDataFromConsole();
 var ldfs = new LdfsSearch(queensCount, fieldSize);
-ldfs.GenerateInitialQueens();
+var queens = ldfs.GenerateInitialQueens();
 Console.WriteLine("The generated board: ");
-ConsoleHelper.Draw(ldfs.Queens, 6);
-var solution = ldfs.Search();
+consoleHelper.Draw(queens, 6);
+var startTime = DateTime.Now;
+var solution = ldfs.Search(queens);
 Console.WriteLine("The found solution");
-ConsoleHelper.Draw(solution, 6);
+consoleHelper.Draw(solution, 6);
+Console.Write("The solution was found in: ");
+Console.WriteLine((DateTime.Now - startTime).TotalMilliseconds);

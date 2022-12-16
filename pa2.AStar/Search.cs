@@ -1,10 +1,18 @@
 ﻿namespace pa2.AStar;
 
-public static class Search
+public class Search
 {
-	public static State FindThePath(List<Queen> queens,int queensCount, int fieldSize)
+	private int _queensCount;
+	private int _fieldSize;
+	public Search(int queensCount, int fieldSize)
+    {
+        _queensCount = queensCount;
+        _fieldSize = fieldSize;
+    }
+
+    public State FindThePath(List<Queen> queens)
 	{
-		UpgradeInitial(queens, fieldSize);
+		UpgradeInitial(queens);
 		while (true)
 		{
 			int? minIdx = null;
@@ -23,7 +31,7 @@ public static class Search
 			if (minIdx is not null)
 			{
 				var possibleSolution = ChessMap.States[(int)minIdx].CreateDirevative((int)minIdx,
-					queensCount, fieldSize);
+					_queensCount, _fieldSize);
 				if (possibleSolution is not null)
 				{
 					return possibleSolution;
@@ -32,7 +40,7 @@ public static class Search
 		}
 	}
 
-    private static void UpgradeInitial(List<Queen> queens, int fieldSize)
+    private void UpgradeInitial(List<Queen> queens)
     {
 		var newState = new State(queens);
 		var map = newState.Map = new List<int>(8 * 8);
@@ -45,28 +53,28 @@ public static class Search
 		{
 			var x = queens[i].X;
 			var y = queens[i].Y;
-			ChessMap.UpgradeMap(map, x, y, 1, fieldSize);
+			ChessMap.UpgradeMap(map, x, y, 1, _fieldSize);
 		}
 
-		newState.GenerateActions(queens.Count, fieldSize);
+		newState.GenerateActions(queens.Count, _fieldSize);
 		ChessMap.States.Add(newState);
 	}
 
-    public static List<Queen> GenerateInitialQueens(int queensCount, int fieldSize)
+    public List<Queen> GenerateInitialQueens()
 	{
-		if (!ConsoleHelper.IsInRange((uint)queensCount, (uint)fieldSize))
+		if (!ConsoleHelper.IsInRange((uint)_queensCount, (uint)_fieldSize))
 		{
 			throw new InvalidDataException();
 		}
 
-		var queens = new List<Queen>(queensCount);
+		var queens = new List<Queen>(_queensCount);
 
 
-        var i = queensCount;
+        var i = _queensCount;
         while (i > 0)
         {
-            var x = queensCount - i;
-            var y = Random.Shared.Next(0, fieldSize - 1);
+            var x = _queensCount - i;
+            var y = Random.Shared.Next(0, _fieldSize - 1);
             queens.Add(new(x, y));
             i--;
         }

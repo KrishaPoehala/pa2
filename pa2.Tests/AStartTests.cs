@@ -10,18 +10,20 @@ public class AStartTests
     [Fact]
     public void GivesASolution_WhenTheInputIsCorrect()
     {
-        var testqueens = GenerateInitial();
-        var solution = Search.FindThePath(testqueens, 6, 6);
-        Assert.Equal(ExpectedSolution(), solution.Queens, new QueenEqualityComparer());
-    }
+        var astar = new Search(6, 6);
+        var testqueens = GetInitial();
+        var solution = astar.FindThePath(testqueens);
+        Assert.Equal(GetExpected(), solution.Queens, new QueenEqualityComparer());
+    }   
 
     [Fact]
     public void Throws_WhenTheInputIsIncorrect()
     {
-        Assert.Throws<InvalidDataException>(() => Search.GenerateInitialQueens(-1, 2));
+        var astar = new Search(-1, 6);
+        Assert.Throws<InvalidDataException>(() => astar.GenerateInitialQueens());
     }
 
-    private List<Queen> GenerateInitial() => new()
+    private List<Queen> GetInitial() => new()
     {
         new(0, 0),
         new(1, 2),
@@ -31,7 +33,7 @@ public class AStartTests
         new(5, 0),
     };
 
-    private List<Queen> ExpectedSolution() => new()
+    private List<Queen> GetExpected() => new()
     {
         new(0,2),
         new(1,5),

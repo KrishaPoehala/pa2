@@ -3,7 +3,7 @@ namespace pa2.Ldfs;
 
 public class ConsoleHelper
 {
-    public static void Draw(List<Queen> queens, int fieldSize)
+    public void Draw(List<Queen> queens, int fieldSize)
     {
         for (int i = 0; i < fieldSize; i++)
         {
@@ -24,9 +24,10 @@ public class ConsoleHelper
             Console.WriteLine('\n');
         }
     }
-    public static (int, int) GetDataFromConsole()
+    public (int, int) GetDataFromConsole()
     {
         Console.WriteLine("Welcome to the lab 2");
+        //to exit the cycle valid data is needed
         while (true)
         {
             Console.WriteLine("Enter the queens count: ");
@@ -48,13 +49,14 @@ public class ConsoleHelper
                 Console.WriteLine($"Wrong format of {fieldSizeAsString}");
             }
 
-            if (IsInRange(queensCount, fieldSize))
+            if (!IsInRange(queensCount, fieldSize))
             {
-                return ((int)queensCount, (int)fieldSize);
+                Console.WriteLine($"Max values are: {Constants.FIELD_SIZE_MAX}" +
+               $" and {Constants.QUEENS_COUNT_MAX}");
             }
 
-            Console.WriteLine($"Max values are: {Constants.FIELD_SIZE_MAX}" +
-                $" and {Constants.QUEENS_COUNT_MAX}");
+            return ((int)queensCount, (int)fieldSize);
+           
         }
     }
 
