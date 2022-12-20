@@ -41,21 +41,23 @@ public class ConsoleHelper
             if (!uint.TryParse(queensAsString?.Trim(), out var queensCount))
             {
                 Console.WriteLine($"Wrong format of {queensAsString}");
+                continue;
             }
 
             if (!uint.TryParse(fieldSizeAsString?.Trim(), out var fieldSize))
             {
                 Console.WriteLine($"Wrong format of {fieldSizeAsString}");
+                continue;
             }
 
             if (!IsInRange(queensCount, fieldSize))
             {
                 Console.WriteLine($"Max values are: {Constants.FIELD_SIZE_MAX}" +
                $" and {Constants.QUEENS_COUNT_MAX}");
+                continue;
             }
 
             return ((int)queensCount, (int)fieldSize);
-           
         }
     }
 
