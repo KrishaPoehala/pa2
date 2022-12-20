@@ -84,7 +84,6 @@ public class LdfsSearch
 			}
 
 			_totalWrong += wrong + 1;
-            Console.Write(wrong + 1 + "\t");
 			_queens.Add(new(x, y, wrong + 1));
 			add--;
 		}
