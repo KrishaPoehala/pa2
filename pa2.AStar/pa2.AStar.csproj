@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\pa2.Common\pa2.Common.csproj" />
+    <ProjectReference Include="..\pa2.Ldfs\pa2.Ldfs.csproj" />
   </ItemGroup>
 
 </Project>
