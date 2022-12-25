@@ -12,10 +12,12 @@ public class AStarSearch
         _fieldSize = fieldSize;
     }
 
-    public State FindThePath(List<Queen> queens)
+    public State? FindThePath(List<Queen> queens)
 	{
 		UpgradeInitial(queens);
-		while (true)
+		State? solution = default;
+		var isFound = false;
+		while (isFound == false)
 		{
 			int? minIdx = null;
 			var minVal = int.MaxValue;
@@ -32,14 +34,16 @@ public class AStarSearch
 
 			if (minIdx is not null)
 			{
-				var possibleSolution = ChessMap.States[(int)minIdx].CreateDirevative((int)minIdx,
+				solution = ChessMap.States[(int)minIdx].CreateDirevative((int)minIdx,
 					_queensCount, _fieldSize);
-				if (possibleSolution is not null)
+				if (solution is not null)
 				{
-					return possibleSolution;
+					isFound = true;
 				}
 			}
 		}
+
+		return solution;
 	}
 
     private void UpgradeInitial(List<Queen> queens)

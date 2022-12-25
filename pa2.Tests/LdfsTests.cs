@@ -13,10 +13,7 @@ public class LdfsTests
     public void GivesTheRightPath_WhenTheInputIsCorrect()
     {
         var ldfs = new LdfsSearch(6, 6);
-
         ldfs.Search(GetInitial());
-        File.WriteAllLines("path.txt", ldfs.Queens.Select(x => x.ToString()));
-
         Assert.Equal(GetExpected(), ldfs.Queens, new QueenEqualityComparer());
     }
 
