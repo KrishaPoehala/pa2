@@ -20,4 +20,9 @@ public class Queen : QueenBase
         y = Y;
         wrong = Wrong;
     }
+
+    public override string ToString()
+    {
+        return $"({X},{Y})";
+    }
 }
