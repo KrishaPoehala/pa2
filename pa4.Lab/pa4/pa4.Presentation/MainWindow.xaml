@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pa4.Presentation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="73*"/>
-            <ColumnDefinition Width="427*"/>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="619*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <TextBlock>a</TextBlock>
@@ -33,18 +33,20 @@
                 Generate
             </Button>
 
-            <Button Click="Button_Click">
+            <Button Click="Button_Click"
+                    Name="startB"
+                    IsEnabled="False">
                 Start
             </Button>
-            <Button Click="Button_Click_1">Stop</Button>
-            <Label Name="pointsL" Height="155"></Label>
-            <Label Name="pointsB" Height="255"></Label>
+            <Button Click="Button_Click_1"
+                    Name="stopB"
+                    IsEnabled="False">Stop</Button>
+            <TextBlock Name="output" Height="155"
+                      TextWrapping="WrapWithOverflow"></TextBlock>
         </StackPanel>
         <Canvas Name="canvas" 
-                Margin="3,0,150,-16" 
                 Grid.Column="1"
                 Width="700"
-                Height="700">
-        </Canvas>
+                Height="700"/>
     </Grid>
 </Window>
