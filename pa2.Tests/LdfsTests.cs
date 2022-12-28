@@ -1,7 +1,5 @@
 ﻿using pa2.Ldfs;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Xunit;
 
 namespace pa2.Tests;

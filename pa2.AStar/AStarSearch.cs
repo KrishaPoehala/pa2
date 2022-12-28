@@ -6,10 +6,12 @@ public class AStarSearch
 {
 	private readonly int _queensCount;
 	private readonly int _fieldSize;
+	private readonly TimerService _timerService;
 	public AStarSearch(int queensCount, int fieldSize)
     {
         _queensCount = queensCount;
         _fieldSize = fieldSize;
+		_timerService = new TimerService();
     }
 
     public State? FindThePath(List<Queen> queens)
@@ -17,8 +19,10 @@ public class AStarSearch
 		UpgradeInitial(queens);
 		State? solution = default;
 		var isFound = false;
+		_timerService.Start();
 		while (isFound == false)
 		{
+			_timerService.ThrowIfCancelationRequested();
 			int? minIdx = null;
 			var minVal = int.MaxValue;
 			for (var i = 0; i < ChessMap.States.Count; i++)
