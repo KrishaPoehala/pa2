@@ -59,7 +59,11 @@ public class State
 		var action = _actions[0];
 		_actions.RemoveAt(0);
         var newState = new State { _depth = _depth + 1 };
-		newState._queens = new(_queens);
+        foreach (var item in _queens)
+		{
+			newState._queens.Add(new(item.X, item.Y));
+		}
+
 		newState.Map = new(Map);
 		ChessMap.UpgradeMap(newState.Map, newState._queens[action.QueenNumber], -1, fieldSize);
 		newState._queens[action.QueenNumber].X = action.Ox;
@@ -90,5 +94,4 @@ public class State
 
 		return null;
 	}
-
 }
