@@ -3,8 +3,8 @@ public class State
 {
 	private int _depth = 0;
 	public List<int> Map { get; internal set; } = new();
-	private List<Action> _actions = new();
-	private List<Queen> _queens = new();
+	private readonly List<Action> _actions = new();
+	private readonly List<Queen> _queens = new();
 
     public State()
     {
@@ -55,13 +55,8 @@ public class State
     {
         var action = _actions[0];
         _actions.RemoveAt(0);
-        State newState = GetNextState(fieldSize, action);
-        var sorted = new List<Queen>(newState._queens);
-
-        sorted.Sort((q, b) => (q.X + q.Y * fieldSize)
-        - (b.X + b.Y * fieldSize));
-
-        string hash = string.Join("-", sorted);
+        var newState = GetNextState(fieldSize, action);
+        var hash = GenerateUniqueHash(newState, fieldSize);
         if (!ChessMap.Set.Contains(hash))
         {
             ChessMap.Set.Add(hash);
@@ -81,6 +76,15 @@ public class State
         }
 
         return null;
+    }
+
+    private string GenerateUniqueHash(State newState, int fieldSize)
+    {
+        var sorted = new List<Queen>(newState._queens);
+        sorted.Sort((q, b) => (q.X + q.Y * fieldSize)
+        - (b.X + b.Y * fieldSize));
+        string hash = string.Join("-", sorted);
+        return hash;
     }
 
     private State GetNextState(int fieldSize, Action action)
