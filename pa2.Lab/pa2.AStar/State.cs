@@ -1,7 +1,4 @@
-﻿
-namespace pa2.AStar;
-
-
+﻿namespace pa2.AStar;
 public class State
 {
 	private int _depth = 0;
@@ -55,43 +52,49 @@ public class State
 	}
 
 	public State? CreateDirevative(int index, int queensCount, int fieldSize)
-	{
-		var action = _actions[0];
-		_actions.RemoveAt(0);
+    {
+        var action = _actions[0];
+        _actions.RemoveAt(0);
+        State newState = GetNextState(fieldSize, action);
+        var sorted = new List<Queen>(newState._queens);
+
+        sorted.Sort((q, b) => (q.X + q.Y * fieldSize)
+        - (b.X + b.Y * fieldSize));
+
+        string hash = string.Join("-", sorted);
+        if (!ChessMap.Set.Contains(hash))
+        {
+            ChessMap.Set.Add(hash);
+            ChessMap.UpgradeMap(newState.Map, action.Ox, action.Oy, 1, fieldSize);
+            if (newState.IsSolution(queensCount, fieldSize))
+            {
+                return newState;
+            }
+
+            newState.GenerateActions(queensCount, fieldSize);
+            ChessMap.States.Add(newState);
+        }
+
+        if (_actions.Count == 0)
+        {
+            ChessMap.States.RemoveAt(index);
+        }
+
+        return null;
+    }
+
+    private State GetNextState(int fieldSize, Action action)
+    {
         var newState = new State { _depth = _depth + 1 };
         foreach (var item in _queens)
-		{
-			newState._queens.Add(new(item.X, item.Y));
-		}
+        {
+            newState._queens.Add(new(item.X, item.Y));
+        }
 
-		newState.Map = new(Map);
-		ChessMap.UpgradeMap(newState.Map, newState._queens[action.QueenNumber], -1, fieldSize);
-		newState._queens[action.QueenNumber].X = action.Ox;
-		newState._queens[action.QueenNumber].Y = action.Oy;
-		var sorted = new List<Queen>(newState._queens);
-
-		sorted.Sort((q, b) => (q.X + q.Y * fieldSize)
-		- (b.X + b.Y * fieldSize));
-
-		string hash = string.Join("-", sorted);
-		if (!ChessMap.Set.Contains(hash))
-		{
-			ChessMap.Set.Add(hash);
-			ChessMap.UpgradeMap(newState.Map, action.Ox, action.Oy, 1, fieldSize);
-			if (newState.IsSolution(queensCount, fieldSize))
-			{
-				return newState;
-			}
-
-			newState.GenerateActions(queensCount, fieldSize);
-			ChessMap.States.Add(newState);
-		}
-
-		if (_actions.Count == 0)
-		{
-			ChessMap.States.RemoveAt(index);
-		}
-
-		return null;
-	}
+        newState.Map = new(Map);
+        ChessMap.UpgradeMap(newState.Map, newState._queens[action.QueenNumber], -1, fieldSize);
+        newState._queens[action.QueenNumber].X = action.Ox;
+        newState._queens[action.QueenNumber].Y = action.Oy;
+        return newState;
+    }
 }
