@@ -1,0 +1,52 @@
+﻿<Window x:Class="pa4.Presentation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pa4.Presentation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="619*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <TextBlock>a</TextBlock>
+            <TextBox Text ="3" Name="aT"></TextBox>
+
+            <TextBlock>b</TextBlock>
+            <TextBox Text="2" Name="bT"></TextBox>
+
+            <TextBlock>p</TextBlock>
+            <TextBox Text="0.3" Name="pT"></TextBox>
+
+            <TextBlock>ants count</TextBlock>
+            <TextBox Name="antsT" Text="25"></TextBox>
+
+            <TextBlock>points count</TextBlock>
+            <TextBox Name="pointsT" Text="100"></TextBox>
+            <Button
+                Name="generateB"
+                Click="generateB_Click"
+               >
+                Generate
+            </Button>
+
+            <Button Click="Button_Click"
+                    Name="startB"
+                    IsEnabled="False">
+                Start
+            </Button>
+            <Button Click="Button_Click_1"
+                    Name="stopB"
+                    IsEnabled="False">Stop</Button>
+            <TextBlock Name="output" Height="155"
+                      TextWrapping="WrapWithOverflow"></TextBlock>
+        </StackPanel>
+        <Canvas Name="canvas" 
+                Grid.Column="1"
+                Width="700"
+                Height="700"/>
+    </Grid>
+</Window>
