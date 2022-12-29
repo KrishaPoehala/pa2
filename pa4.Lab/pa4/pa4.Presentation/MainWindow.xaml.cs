@@ -18,7 +18,7 @@ public partial class MainWindow : Window
     private readonly ConfigurationValidation _validation = new();
     private readonly DispatcherTimer _drawTimer = new();
     private readonly DispatcherTimer _stepTimer = new();
-    private Search _search;
+    private AntsGraphSearch? _search;
     public MainWindow()
     {
         InitializeComponent();
@@ -36,13 +36,13 @@ public partial class MainWindow : Window
 
     private void _stepTimer_Tick(object? sender, EventArgs e)
     {
-        _search.UpdateRoades();
+        _search?.UpdateRoades();
     }
 
     void ReDrawCadr()
     {
         canvas.Children.Clear();
-        for (int i = 0; i < _search.Points.Count; i++)
+        for (int i = 0; i < _search?.Points.Count; i++)
         {
             for (int j = 0; j < _search.Points.Count; ++j)
             {
@@ -52,18 +52,14 @@ public partial class MainWindow : Window
                 }
 
                 var line = GetGraphLine(i, j);
-
                 canvas.Children.Add(line);
+
+                var eclipse = GetGraphPoint();
+
+                Canvas.SetTop(eclipse, _search.Points[i].Y - 5);
+                Canvas.SetLeft(eclipse, _search.Points[i].X - 5);
+                canvas.Children.Add(eclipse);
             }
-        }
-
-        for (int i = 0; i < _search.Points.Count; i++)
-        {
-            var eclipse = GetGraphPoint();
-
-            Canvas.SetTop(eclipse, _search.Points[i].Y - 5);
-            Canvas.SetLeft(eclipse, _search.Points[i].X - 5);
-            canvas.Children.Add(eclipse);
         }
     }
 
@@ -77,8 +73,13 @@ public partial class MainWindow : Window
         };
     }
 
-    private Line GetGraphLine(int i, int j)
+    private Line? GetGraphLine(int i, int j)
     {
+        if (_search is null)
+        {
+            return null;
+        }
+
         return new()
         {
             X1 = _search.Points[i].X,
@@ -98,23 +99,43 @@ public partial class MainWindow : Window
         _drawTimer.Start();
     }
 
+    private T? Parse<T>(Func<string, T> parser, string input, string parameterName)
+    {
+        try
+        {
+            var result = parser(input);
+            return result;
+        }
+        catch (FormatException)
+        {
+            output.Text += parameterName + " contains some chars or other incorrect symbols";
+            throw;
+        }
+        catch(OverflowException)
+        {
+            output.Text += parameterName + " is too large";
+            throw;
+        }
+    }
+
     private (double, double, double, int, int) ParseInitialValues(out bool success)
     {
         try
         {
-            var a = double.Parse(aT.Text.Trim().Replace('.', ','));
-            var b = double.Parse(bT.Text.Trim().Replace('.', ','));
-            var p = double.Parse(pT.Text.Trim().Replace('.', ','));
-            var pointsCount = int.Parse(pointsT.Text);
-            var antsCount = int.Parse(antsT.Text);
+            var a = Parse(double.Parse, aT.Text.Trim().Replace('.', ','), "alpha");
+            var b = Parse(double.Parse, bT.Text.Trim().Replace('.', ','), "beta");
+            var p = Parse(double.Parse, pT.Text.Trim().Replace('.', ','), "ro");
+            var pointsCount = Parse(int.Parse, pointsT.Text, "points count");
+            var antsCount = Parse(int.Parse, antsT.Text, "ants count");
             success = true;
             return (a, b, p, pointsCount, antsCount);
         }
-        catch (Exception)
+        catch
         {
             success = false;
-            return default;
         }
+
+        return default;
     }
 
     private void generateB_Click(object sender, RoutedEventArgs e)
@@ -122,7 +143,6 @@ public partial class MainWindow : Window
         var (a, b, p, points, ants) = ParseInitialValues(out var success);
         if (!success)
         {
-            output.Text = "Values are not in a correct format!";
             return;
         }
 

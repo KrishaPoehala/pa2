@@ -1,7 +1,7 @@
 ﻿using pa4.Algorithm.Settings;
 namespace pa4.Algorithm;
 
-public class Search
+public class AntsGraphSearch
 {
     private readonly List<Point> _points = new();
     private readonly double[,] _distances;
@@ -10,7 +10,7 @@ public class Search
     private readonly AlgorithmConfiguration _configuration;
     private readonly IRandom _random;
 
-    public Search(IRandom random, AlgorithmConfiguration configuration)
+    public AntsGraphSearch(IRandom random, AlgorithmConfiguration configuration)
     {
         _random = random;
         _configuration = configuration;
@@ -89,14 +89,6 @@ public class Search
         }
 
         return lmin;
-    }
-
-    public void UpdateRoades(int iterationsToStop)
-    {
-        for (int i = 0; i < iterationsToStop; i++)
-        {
-            UpdateRoades();
-        }
     }
 
     public void UpdateRoades()

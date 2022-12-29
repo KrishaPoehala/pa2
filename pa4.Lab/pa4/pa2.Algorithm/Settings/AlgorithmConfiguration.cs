@@ -11,24 +11,6 @@ public class AlgorithmConfiguration
         AntsCount = antsCount;
     }
 
-    public AlgorithmConfiguration(int pointsCount, int antsCount)
-    {
-        AntsCount = antsCount;
-        PointsCount = pointsCount;
-        A = DefaultOptions.A;
-        B = DefaultOptions.B;
-        P = DefaultOptions.P;
-    }
-
-    public AlgorithmConfiguration()
-    {
-        A = DefaultOptions.A;
-        B = DefaultOptions.B;
-        P = DefaultOptions.P;
-        PointsCount = DefaultOptions.PointsCount;
-        AntsCount = DefaultOptions.AntsCount;
-    }
-
     public double A { get; }
     public double B { get; }
     public double P { get; }
