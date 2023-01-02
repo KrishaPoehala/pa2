@@ -22,7 +22,7 @@
             <TextBox Text="0.3" Name="pT"></TextBox>
 
             <TextBlock>ants count</TextBlock>
-            <TextBox Name="antsT" Text="2"></TextBox>
+            <TextBox Name="antsT" Text="20"></TextBox>
 
             <TextBlock>points count</TextBlock>
             <TextBox Name="pointsT" Text="60"></TextBox>

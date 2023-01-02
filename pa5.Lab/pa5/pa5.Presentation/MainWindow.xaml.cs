@@ -159,7 +159,6 @@ public partial class MainWindow : Window
         {
             n.Text = string.Join("\n", validationResult.Errors.Select(x => x.ErrorMessage));
             return;
-            
         }
 
         search = new(conf);
