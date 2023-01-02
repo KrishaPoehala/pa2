@@ -7,6 +7,47 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="619*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <TextBlock>a</TextBlock>
+            <TextBox Text ="3" Name="aT"></TextBox>
 
+            <TextBlock>b</TextBlock>
+            <TextBox Text="2" Name="bT"></TextBox>
+
+            <TextBlock>p</TextBlock>
+            <TextBox Text="0.3" Name="pT"></TextBox>
+
+            <TextBlock>ants count</TextBlock>
+            <TextBox Name="antsT" Text="2"></TextBox>
+
+            <TextBlock>points count</TextBlock>
+            <TextBox Name="pointsT" Text="60"></TextBox>
+            <Button
+                Name="generateB"
+                Click="generateB_Click"
+               >
+                Generate
+            </Button>
+
+            <Button Click="Button_Click"
+                    Name="startB"
+                    IsEnabled="False">
+                Start
+            </Button>
+            <Button Click="stopB_Click"
+                    Name="stopB"
+                    IsEnabled="False">Stop</Button>
+            <TextBlock Name="n" Height="155"
+                      TextWrapping="WrapWithOverflow">
+            </TextBlock>
+        </StackPanel>
+        <Canvas Name="canvas" 
+                Grid.Column="1"
+                Width="700"
+                Height="700"/>
     </Grid>
 </Window>
